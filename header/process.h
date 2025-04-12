@@ -1,3 +1,5 @@
+using namespace std;
+
 #include "process_type_enum.h"
 #include "process_state_enum.h"
 #include <string>

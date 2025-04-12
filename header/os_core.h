@@ -1,3 +1,5 @@
+using namespace std;
+
 #include <list>
 #include <string>
 #include "header/process.h"
