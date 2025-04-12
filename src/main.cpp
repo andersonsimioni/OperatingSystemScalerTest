@@ -2,17 +2,22 @@ using namespace std;
 
 #include <iostream>
 #include <vector>
-//#include "os_core.h"
+#include "os_core.h"
 
-int main(char* argv, int argc) {
-    std::cout<<"starting OS..";
-    //std::vector<std::string> args;
-    //std::copy(argv + 1, argv + argc, std::back_inserter(args));
+int main(int argc, char* argv[]) {
+    std::cout<<"starting OS.."<<std::endl;
 
-    //std::cout<<args[0];
+    if(argc < 1)
+    {
+        std::cout<<"Process list file not inserted!";
+        return -1;
+    }
 
-    //OsCore osCore(args[0]);
-    //osCore.run();
+    std::string processListFile = argv[1];
+    std::cout<<"Process list file: "<<processListFile<<std::endl;
+
+    OsCore osCore(processListFile);
+    osCore.run();
 
     return 0;
 }

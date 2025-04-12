@@ -16,5 +16,4 @@ public:
     PROCESS_STATE_ENUM state;
 
     Process();
-    ~Process();
 };

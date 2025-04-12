@@ -14,5 +14,4 @@ public:
     void run();
     
     OsCore(string processListFileName);
-    ~OsCore();
 };
