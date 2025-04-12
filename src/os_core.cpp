@@ -1,4 +1,4 @@
-#include "header/os_core.h"
+#include "os_core.h"
 
 void OsCore::run()
 {
