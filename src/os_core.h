@@ -12,6 +12,10 @@ private:
 
 public:
     void run();
+
+    Process* getProcessByPID(int pid);
+
+    int getNewPID();
     
     OsCore(string processListFileName);
 };

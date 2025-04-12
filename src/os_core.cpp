@@ -1,5 +1,23 @@
 #include "os_core.h"
 
+Process* OsCore::getProcessByPID(int pid)
+{
+    for (int i = 0; i < processes.size(); i++)
+    {
+        if(processes[i].PID == pid) return processes[i]; 
+    }
+    
+    return nullptr;
+}
+
+int OsCore::getNewPID()
+{
+    int newPID = rand() % 100000;
+    while (getProcessByPID(newPID) != nullptr) newPID = rand() % 100000;
+
+    return newPID;
+}
+
 OsCore::OsCore(string processListFileName)
 {
     std:ifstream processListFile(processListFileName);
@@ -13,6 +31,7 @@ OsCore::OsCore(string processListFileName)
     getline (processListFile, processCount);
     for (int i = 0; i < std::stoi(processCount); i++) {
         Process newProcess(&processListFile);
+        newProcess.PID = getNewPID();
         processes.push_front(newProcess);
     }
     
