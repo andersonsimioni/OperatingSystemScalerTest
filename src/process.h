@@ -3,6 +3,9 @@ using namespace std;
 #include "process_type_enum.h"
 #include "process_state_enum.h"
 #include <string>
+#include <iostream>
+#include <fstream>
+
 
 class Process
 {
@@ -15,5 +18,5 @@ public:
     PROCESS_TYPE_ENUM type;
     PROCESS_STATE_ENUM state;
 
-    Process();
+    Process(ifstream* processListFileStream);
 };
