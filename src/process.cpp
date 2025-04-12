@@ -1,5 +1,10 @@
 #include "process.h"
 
+void Process::RunSimulation()
+{
+    std::cout<<"Simulating process "<<PID<<std::endl;
+}
+
 Process::Process(ifstream* processListFileStream)
 {
     /* int PID;

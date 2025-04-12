@@ -18,5 +18,7 @@ public:
     PROCESS_TYPE_ENUM type;
     PROCESS_STATE_ENUM state;
 
+    void RunSimulation();
+
     Process(ifstream* processListFileStream);
 };
