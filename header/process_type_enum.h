@@ -1,0 +1,5 @@
+enum PROCESS_TYPE_ENUM{
+    CPU_BOUND,
+    MEMORY_BOUND,
+    IO_BOUND
+};

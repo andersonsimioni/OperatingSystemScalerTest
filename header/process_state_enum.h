@@ -1,0 +1,7 @@
+enum PROCESS_STATE_ENUM{
+    STARTING,
+    READY,
+    RUNNING,
+    BLOCKED,
+    FINISH
+};
