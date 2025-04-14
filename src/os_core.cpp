@@ -42,5 +42,28 @@ OsCore::OsCore(string processListFileName)
 
 void OsCore::run()
 {
+    while (true)
+    {
+        usleep(100);
+        for (int i = 0; i < processes.size(); i++)
+        {
+            switch (processes[i].state)
+            {
+            case STARTING:
+                break;
+            case READY:
+                break;
+            case RUNNING:
+                break;
+            case BLOCKED:
+                break;
+            case FINISH:
+                break;
+            
+            default:
+                break;
+            }
+        }
+    }
     
 }

@@ -1,9 +1,12 @@
+#pragma once
 using namespace std;
 
-#include <list>
 #include <string>
-#include "process.h"
 #include <vector>
+#include <chrono>
+#include <thread>
+#include <unistd.h>
+#include "process.h"
 
 class OsCore
 {
@@ -14,9 +17,9 @@ private:
 public:
     void run();
 
+    int getNewPID();
+
     Process* getProcessByPID(int pid);
 
-    int getNewPID();
-    
     OsCore(string processListFileName);
 };

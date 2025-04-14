@@ -1,8 +1,23 @@
 #include "process.h"
 
-void Process::RunSimulation()
+void Process::Run()
 {
-    std::cout<<"Simulating process "<<PID<<std::endl;
+    //std::cout<<"Simulating process "<<PID<<std::endl;
+    
+    switch (type)
+    {
+    case CPU_BOUND:
+        break;
+        
+    case MEMORY_BOUND:
+        break;
+
+    case IO_BOUND:
+        break;
+    
+    default:
+        break;
+    }
 }
 
 Process::Process(ifstream* processListFileStream)

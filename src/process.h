@@ -1,11 +1,12 @@
+#pragma once
 using namespace std;
 
-#include "process_type_enum.h"
-#include "process_state_enum.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 
+#include "process_type_enum.h"
+#include "process_state_enum.h"
 
 class Process
 {
@@ -18,7 +19,7 @@ public:
     PROCESS_TYPE_ENUM type;
     PROCESS_STATE_ENUM state;
 
-    void RunSimulation();
+    void Run();
 
     Process(ifstream* processListFileStream);
 };
