@@ -3,11 +3,12 @@ using namespace std;
 #include <list>
 #include <string>
 #include "process.h"
+#include <vector>
 
 class OsCore
 {
 private:
-    list<Process> processes;
+    vector<Process> processes;
     void log();
 
 public:

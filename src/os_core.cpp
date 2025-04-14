@@ -4,7 +4,7 @@ Process* OsCore::getProcessByPID(int pid)
 {
     for (int i = 0; i < processes.size(); i++)
     {
-        if(processes[i].PID == pid) return processes[i]; 
+        if(processes[i].PID == pid) return &processes[i];
     }
     
     return nullptr;
@@ -29,10 +29,11 @@ OsCore::OsCore(string processListFileName)
 
     string processCount;
     getline (processListFile, processCount);
-    for (int i = 0; i < std::stoi(processCount); i++) {
+    for (int i = 0; i < std::stoi(processCount); i++) 
+    {
         Process newProcess(&processListFile);
         newProcess.PID = getNewPID();
-        processes.push_front(newProcess);
+        processes.push_back(newProcess);
     }
     
 
