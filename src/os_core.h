@@ -1,6 +1,7 @@
 #pragma once
 using namespace std;
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <chrono>
@@ -8,16 +9,19 @@ using namespace std;
 #include <unistd.h>
 #include "process.h"
 
+
 #define OS_CORE_TICK_MS 1 //Looping clock ms
-#define OS_CORE_SCALING_TICKS 5 //Ticks to scale processes
+#define OS_CORE_PROCESS_SCALING_TICKS 5 //Ticks to scale processes
 #define OS_CORE_TIME_SCALE 1 //Scale to visualize better on run simulation, set 1 to real time
-#define BLOCK_UNBLOCK_PROBABILITY 5 //0-100% chance to request or receive a IO resource
+#define BLOCK_PROBABILITY 1 //0-100% chance to request an IO resource
+#define UNBLOCK_PROBABILITY 5 //0-100% chance to receive an IO resource
 #define MAX_RUNNING_PROCESSES 1 //Max processes on running state simultaneous
 
 class OsCore
 {
 private:
     int execution_time; //Current OS execution time
+    int ticks_count; //Current OS ticks count
 
     vector<Process> processes; //All processes on system
     void log();

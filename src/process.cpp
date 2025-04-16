@@ -43,7 +43,7 @@ void Process::run()
         break;
 
     case IO_BOUND:
-        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) requested_resource = 1;
+        if((rand() % 100) <= BLOCK_PROBABILITY) requested_resource = 1;
         break;
     
     default:

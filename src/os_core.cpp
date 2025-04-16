@@ -1,5 +1,12 @@
 #include "os_core.h"
 
+long getSystemTimeMs()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()
+    ).count();
+}
+
 Process* OsCore::getProcessByPID(int pid)
 {
     for (int i = 0; i < processes.size(); i++)
@@ -29,22 +36,25 @@ vector<Process*> OsCore::getProcessesByState(PROCESS_STATE_ENUM state)
 
 void OsCore::scaleProcess()
 {
+    if(processes.size() <= 0) return;
+
     Process* bp = nullptr; //best process to scale in
     vector<Process*> ready = getProcessesByState(READY);
-    if(ready.size() > 0)
-    {
-        bp = ready[0];
-        for (int i = 1; i < ready.size(); i++) if(ready[i]->getFinalPriority() > bp->getFinalPriority()) bp = ready[i];
-    }
-
     vector<Process*> running = getProcessesByState(RUNNING);
+    
+    bp = ready.size() > 0 ? ready[0] : (running.size() > 0 ? running[0] : nullptr);
+    if(bp == nullptr) return;
+
+    for (int i = 0; i < ready.size(); i++) if(ready[i]->getFinalPriority() > bp->getFinalPriority()) bp = ready[i];
+    for (int i = 0; i < running.size(); i++) if(running[i]->getFinalPriority() > bp->getFinalPriority()) bp = running[i];
+
+    //TODO: Work only on 1 process running by time, on multi running process have to change..
+    if(bp->state == RUNNING) return;
+
     for (int i = 0; i < running.size(); i++) running[i]->state = READY;
 
-    if(bp != nullptr)
-    {
-        cout<<"Scaling "<<bp->name<<" process "<<bp->current_total_execution_time<<"/"<<bp->total_estimated_execution_time<<endl;
-        bp->state = RUNNING;
-    }
+    cout<<"Scaling "<<bp->name<<endl<<bp->current_total_execution_time<<"/"<<bp->total_estimated_execution_time<<endl;
+    bp->state = RUNNING;
     
     //free(&running);
 }
@@ -65,18 +75,25 @@ void OsCore::run()
     {
         usleep(OS_CORE_TICK_MS * OS_CORE_TIME_SCALE);
         execution_time += OS_CORE_TICK_MS;
+        ticks_count++;
 
         for (int i = 0; i < processes.size(); i++)
         {
             processes[i].current_state_execution_time++;
             processes[i].states_total_executed_time[processes[i].state]++;
             if(processes[i].state != RUNNING) processes[i].aging++;
-            if(processes[i].current_total_execution_time >= processes[i].total_estimated_execution_time) processes[i].state = FINISH;
-
+            if(processes[i].current_total_execution_time >= processes[i].total_estimated_execution_time && processes[i].state != FINISH)
+            {
+                processes[i].state = FINISH;
+                processes[i].system_end_time = getSystemTimeMs();
+                cout<<"Process "<<processes[i].name<<" FINISH"<<endl<<"system time duration "<<(processes[i].system_end_time-processes[i].system_start_time)<<endl;
+            }
+            
             switch (processes[i].state)
             {
             case STARTING:
                 processes[i].state = READY;
+                processes[i].system_start_time = getSystemTimeMs();
                 cout<<"Starting process "<<processes[i].name<<endl;
                 break;
 
@@ -86,16 +103,16 @@ void OsCore::run()
             case RUNNING:
                 processes[i].current_total_execution_time++;
                 processes[i].run();
-                break;
 
-            case BLOCKED:
                 if(processes[i].requested_resource)
                 {
                     processes[i].state = BLOCKED;
                     std:cout<<"Process "<<processes[i].name<<" waiting for resource"<<endl;
                 }
+                break;
 
-                if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) 
+            case BLOCKED:
+                if((rand() % 100) <= UNBLOCK_PROBABILITY) 
                 {
                     processes[i].state = READY;
                     processes[i].requested_resource = 0;
@@ -111,7 +128,7 @@ void OsCore::run()
             }
         }
         
-        scaleProcess();
+        if((ticks_count % OS_CORE_PROCESS_SCALING_TICKS) == 0) scaleProcess();
         endTick();
     }
 }

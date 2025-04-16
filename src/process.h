@@ -22,6 +22,8 @@ public:
     int current_state_execution_time; //Relative execution time of current state, zero on new state
     int current_total_execution_time; //Current total execution time: (current time)/(total time) = %
     int total_estimated_execution_time; //Total time the process will run
+    long system_start_time; //System time when process was puted on READY
+    long system_end_time; //System time when process was FINISH
     PROCESS_TYPE_ENUM type; //Type of process
     PROCESS_STATE_ENUM state; //Current state of process, all starts on starting
 
