@@ -10,6 +10,8 @@ Process* OsCore::getProcessByPID(int pid)
     return nullptr;
 }
 
+/// @brief 
+/// @return 
 int OsCore::getNewPID()
 {
     int newPID = rand() % 100000;
@@ -84,9 +86,16 @@ void OsCore::run()
                 break;
 
             case BLOCKED:
+                if(processes[i].requested_resource)
+                {
+                    processes[i].state = BLOCKED;
+                    std:cout<<"Process "<<processes[i].name<<" waiting for resource"<<endl;
+                }
+
                 if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) 
                 {
                     processes[i].state = READY;
+                    processes[i].requested_resource = 0;
                     cout<<"Process "<<processes[i].name<<" resource arrived"<<endl;
                 }
                 break;

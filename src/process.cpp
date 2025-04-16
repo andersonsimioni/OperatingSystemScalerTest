@@ -38,11 +38,7 @@ void Process::Run()
         break;
 
     case IO_BOUND:
-        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) 
-        {
-            state = BLOCKED;
-            std:cout<<"Process "<<name<<" waiting for resource"<<endl;
-        }
+        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) requested_resource = 1;
         break;
     
     default:

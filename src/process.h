@@ -24,6 +24,8 @@ public:
 
     int* states_total_executed_time; //Total executed time by state
 
+    int requested_resource; //Simulate a resource request
+
     void Run();
 
     Process(ifstream* processListFileStream);
