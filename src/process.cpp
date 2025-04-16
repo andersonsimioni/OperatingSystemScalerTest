@@ -1,9 +1,9 @@
 #include "process.h"
+#include "os_core.h"
 
 void Process::Run()
 {
     //std::cout<<"Simulating process "<<PID<<std::endl;
-    
     switch (type)
     {
     case CPU_BOUND:
@@ -13,6 +13,7 @@ void Process::Run()
         break;
 
     case IO_BOUND:
+        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) state = BLOCKED;
         break;
     
     default:
@@ -22,13 +23,6 @@ void Process::Run()
 
 Process::Process(ifstream* processListFileStream)
 {
-    /* int PID;
-    string name;
-    int priority;
-    int execution_time;
-    PROCESS_TYPE_ENUM type;
-    PROCESS_STATE_ENUM state; */
-
     getline(*processListFileStream, name);
 
     std::string priority_str;
@@ -39,6 +33,14 @@ Process::Process(ifstream* processListFileStream)
     getline(*processListFileStream, type_str);
     type = (PROCESS_TYPE_ENUM)std::stoi(type_str);
 
-    execution_time = 0;
+    std::string total_estimated_execution_time_str;
+    getline(*processListFileStream, total_estimated_execution_time_str);
+    total_estimated_execution_time = (PROCESS_TYPE_ENUM)std::stoi(total_estimated_execution_time_str);
+
+    aging = 0;
+    current_total_execution_time = 0;
+    current_state_execution_time = 0;
     state = PROCESS_STATE_ENUM::STARTING;
+
+    states_total_executed_time = (int*)malloc(sizeof(int)*PROCESS_STATE_ENUM_COUNT);
 }
