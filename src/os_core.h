@@ -15,7 +15,7 @@ using namespace std;
 #define OS_CORE_TIME_SCALE 1 //Scale to visualize better on run simulation, set 1 to real time
 #define BLOCK_PROBABILITY 1 //0-100% chance to request an IO resource
 #define UNBLOCK_PROBABILITY 5 //0-100% chance to receive an IO resource
-#define MAX_RUNNING_PROCESSES 1 //Max processes on running state simultaneous
+#define MAX_RUNNING_PROCESSES 1 //Max processes on running state simultaneous, TODO: NOT READY! KEEP ON 1!
 
 class OsCore
 {
