@@ -49,6 +49,9 @@ void Process::Run()
     default:
         break;
     }
+
+    free(&aux_mem);
+    free(&rd_sum);
 }
 
 Process::Process(ifstream* processListFileStream)

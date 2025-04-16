@@ -30,6 +30,17 @@ void OsCore::scale_process()
     vector<Process*> running = getProcessesByState(RUNNING);
     vector<Process*> ready = getProcessesByState(READY);
 
+    //Select the oldest and higher priority ready process to preempt in running state
+    if(running.size() < MAX_RUNNING_PROCESSES)
+    {
+        Process* bestProcessToPreempt;
+        for (int i = 0; i < ready.size(); i++)
+        {
+            //Preempt logic code...
+        }
+        bestProcessToPreempt->state = RUNNING;
+    }
+
     //Preempt out of running state
     for (int i = 0; i < running.size(); i++)
     {
@@ -40,13 +51,8 @@ void OsCore::scale_process()
         }
     }
 
-    //Select the oldest and higher priority ready process to preempt in running state
-    Process* bestProcessToPreempt;
-    for (int i = 0; i < ready.size(); i++)
-    {
-        //Preempt logic code...
-    }
-    bestProcessToPreempt->state = RUNNING;
+    free(&running);
+    free(&ready);
 }
 
 void OsCore::run()
