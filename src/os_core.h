@@ -10,7 +10,7 @@ using namespace std;
 
 #define OS_CORE_TICK_MS 1
 #define OS_CORE_SCALING_TICKS 5
-
+#define OS_CORE_TIME_SCALE 1000
 #define BLOCK_UNBLOCK_PROBABILITY 5
 
 class OsCore

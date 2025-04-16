@@ -23,7 +23,7 @@ void Process::Run()
         
     case MEMORY_BOUND:        
         aux_mem.clear();
-        
+
         //ALLOC MEMORY
         for (int i = 0; i < rand()%100; i++)
         {
@@ -39,7 +39,11 @@ void Process::Run()
         break;
 
     case IO_BOUND:
-        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) state = BLOCKED;
+        if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) 
+        {
+            state = BLOCKED;
+            std:cout<<"Process "<<name<<" waiting for resource"<<endl;
+        }
         break;
     
     default:

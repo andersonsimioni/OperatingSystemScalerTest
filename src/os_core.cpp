@@ -53,7 +53,7 @@ void OsCore::run()
 {
     while (true)
     {
-        usleep(OS_CORE_TICK_MS);
+        usleep(OS_CORE_TICK_MS * OS_CORE_TIME_SCALE);
         execution_time += OS_CORE_TICK_MS;
 
         for (int i = 0; i < processes.size(); i++)
@@ -66,6 +66,7 @@ void OsCore::run()
             {
             case STARTING:
                 processes[i].state = READY;
+                cout<<"Starting process "<<processes[i].name<<endl;
                 break;
 
             case READY:
@@ -77,7 +78,11 @@ void OsCore::run()
                 break;
 
             case BLOCKED:
-                if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) processes[i].state = READY;
+                if((rand() % 100) <= BLOCK_UNBLOCK_PROBABILITY) 
+                {
+                    processes[i].state = READY;
+                    cout<<"Process "<<processes[i].name<<" resource arrived"<<endl;
+                }
                 break;
 
             case FINISH:
