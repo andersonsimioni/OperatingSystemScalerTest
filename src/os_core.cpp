@@ -1,12 +1,5 @@
 #include "os_core.h"
 
-long getSystemTimeMs()
-{
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch()
-    ).count();
-}
-
 Process* OsCore::getProcessByPID(int pid)
 {
     for (int i = 0; i < processes.size(); i++)
@@ -85,7 +78,7 @@ void OsCore::run()
             if(processes[i].current_total_execution_time >= processes[i].total_estimated_execution_time && processes[i].state != FINISH)
             {
                 processes[i].state = FINISH;
-                processes[i].system_end_time = getSystemTimeMs();
+                processes[i].system_end_time = execution_time;
                 cout<<"Process "<<processes[i].name<<" FINISH"<<endl<<"system time duration "<<(processes[i].system_end_time-processes[i].system_start_time)<<endl;
             }
             
@@ -93,7 +86,7 @@ void OsCore::run()
             {
             case STARTING:
                 processes[i].state = READY;
-                processes[i].system_start_time = getSystemTimeMs();
+                processes[i].system_start_time = execution_time;
                 cout<<"Starting process "<<processes[i].name<<endl;
                 break;
 

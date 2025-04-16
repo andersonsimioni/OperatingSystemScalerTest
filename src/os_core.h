@@ -20,8 +20,8 @@ using namespace std;
 class OsCore
 {
 private:
-    int execution_time; //Current OS execution time
-    int ticks_count; //Current OS ticks count
+    long execution_time; //Current OS execution time
+    long ticks_count; //Current OS ticks count
 
     vector<Process> processes; //All processes on system
     void log();
