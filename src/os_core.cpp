@@ -55,6 +55,7 @@ void OsCore::scaleProcess()
 
     cout<<"Scaling "<<bp->name<<endl<<bp->current_total_execution_time<<"/"<<bp->total_estimated_execution_time<<endl;
     bp->state = RUNNING;
+    bp->aging = 0;
     
     //free(&running);
 }
