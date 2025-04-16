@@ -8,26 +8,26 @@ using namespace std;
 #include <unistd.h>
 #include "process.h"
 
-#define OS_CORE_TICK_MS 1
-#define OS_CORE_SCALING_TICKS 5
-#define OS_CORE_TIME_SCALE 1000
-#define BLOCK_UNBLOCK_PROBABILITY 5
-#define MAX_RUNNING_PROCESSES 1
+#define OS_CORE_TICK_MS 1 //Looping clock ms
+#define OS_CORE_SCALING_TICKS 5 //Ticks to scale processes
+#define OS_CORE_TIME_SCALE 1000 //Scale to visualize better on run simulation, set 1 to real time
+#define BLOCK_UNBLOCK_PROBABILITY 5 //0-100% chance to request or receive a IO resource
+#define MAX_RUNNING_PROCESSES 1 //Max processes on running state simultaneous
 
 class OsCore
 {
 private:
-    int execution_time;
+    int execution_time; //Current OS execution time
 
-    vector<Process> processes;
+    vector<Process> processes; //All processes on system
     void log();
 
 public:
-    void run();
-    int getNewPID();
-    void scale_process();
-    Process* getProcessByPID(int pid);
-    vector<Process*> getProcessesByState(PROCESS_STATE_ENUM state);
+    void run(); //Loop function
+    int getNewPID(); //Generate new process id
+    void scale_process(); //Scale in or out processes of running state
+    Process* getProcessByPID(int pid); //Find process by PID, if nor, return nullptr
+    vector<Process*> getProcessesByState(PROCESS_STATE_ENUM state); //Return a list of processes with the state
 
     OsCore(string processListFileName);
 };
