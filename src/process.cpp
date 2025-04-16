@@ -3,13 +3,39 @@
 
 void Process::Run()
 {
+    int rd_sum = 0;
+    vector<int> aux_mem;
     //std::cout<<"Simulating process "<<PID<<std::endl;
+    
     switch (type)
     {
     case CPU_BOUND:
+        rd_sum = 0;
+        for (int i = 0; i < rand()%100000; i++)
+        {
+            for (int j = 0; j < rand()%100000; j++)
+            {
+                rd_sum++;
+            }
+        }
+        
         break;
         
-    case MEMORY_BOUND:
+    case MEMORY_BOUND:        
+        aux_mem.clear();
+        
+        //ALLOC MEMORY
+        for (int i = 0; i < rand()%100; i++)
+        {
+            for (int j = 0; j < rand()%100; j++)
+            {
+                aux_mem.push_back(rand());
+            }
+        }
+        
+        //FREE MEMORY
+        aux_mem.clear();
+
         break;
 
     case IO_BOUND:
