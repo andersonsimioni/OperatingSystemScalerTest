@@ -55,7 +55,6 @@ void OsCore::scaleProcess()
 
     cout<<"Scaling "<<bp->name<<endl<<bp->current_total_execution_time<<"/"<<bp->total_estimated_execution_time<<endl;
     bp->state = RUNNING;
-    bp->aging = 0;
     
     //free(&running);
 }
@@ -102,6 +101,7 @@ void OsCore::run()
                 break;
 
             case RUNNING:
+                processes[i].aging = 0;
                 processes[i].current_total_execution_time++;
                 processes[i].run();
 
