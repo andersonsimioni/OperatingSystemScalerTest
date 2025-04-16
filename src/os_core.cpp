@@ -27,7 +27,7 @@ vector<Process*> OsCore::getProcessesByState(PROCESS_STATE_ENUM state)
     return process_vector;
 }
 
-void OsCore::scale_process()
+void OsCore::scaleProcess()
 {
     Process* bp = &processes[0]; //best process to scale in
     for (int i = 1; i < processes.size(); i++) if(processes[i].getFinalPriority() > bp->getFinalPriority()) bp = &processes[i];
@@ -38,6 +38,16 @@ void OsCore::scale_process()
     bp->state = RUNNING;
 
     free(&running);
+}
+
+void OsCore::endTick()
+{
+    if(getProcessesByState(FINISH).size() == processes.size())
+    {
+        cout<<"Simulation end, all processes FINISH!"<<endl;
+        //Print report code...
+        exit(0);
+    }
 }
 
 void OsCore::run()
@@ -52,6 +62,7 @@ void OsCore::run()
             processes[i].current_state_execution_time++;
             processes[i].states_total_executed_time[processes[i].state]++;
             if(processes[i].state != RUNNING) processes[i].aging++;
+            if(processes[i].current_total_execution_time >= processes[i].total_estimated_execution_time) processes[i].state = FINISH;
 
             switch (processes[i].state)
             {
@@ -91,7 +102,8 @@ void OsCore::run()
             }
         }
         
-        scale_process();
+        scaleProcess();
+        endTick();
     }
 }
 

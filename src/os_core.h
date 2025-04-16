@@ -24,8 +24,9 @@ private:
 
 public:
     void run(); //Loop function
+    void endTick(); //Run o end of each tick and check if all processes finish, if yes, print report and exit
     int getNewPID(); //Generate new process id
-    void scale_process(); //Scale in or out processes of running state
+    void scaleProcess(); //Scale in or out processes of running state
     Process* getProcessByPID(int pid); //Find process by PID, if nor, return nullptr
     vector<Process*> getProcessesByState(PROCESS_STATE_ENUM state); //Return a list of processes with the state
 
