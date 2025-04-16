@@ -29,32 +29,15 @@ vector<Process*> OsCore::getProcessesByState(PROCESS_STATE_ENUM state)
 
 void OsCore::scale_process()
 {
+    Process* bp = &processes[0]; //best process to scale in
+    for (int i = 1; i < processes.size(); i++) if(processes[i].getFinalPriority() > bp->getFinalPriority()) bp = &processes[i];
+
     vector<Process*> running = getProcessesByState(RUNNING);
-    vector<Process*> ready = getProcessesByState(READY);
+    for (int i = 0; i < running.size(); i++) if(running[i]->PID!=bp->PID) running[i]->state = READY;
 
-    //Select the oldest and higher priority ready process to preempt in running state
-    if(running.size() < MAX_RUNNING_PROCESSES)
-    {
-        Process* bestProcessToPreempt;
-        for (int i = 0; i < ready.size(); i++)
-        {
-            //Preempt logic code...
-        }
-        bestProcessToPreempt->state = RUNNING;
-    }
-
-    //Preempt out of running state
-    for (int i = 0; i < running.size(); i++)
-    {
-        if(running[i]->current_state_execution_time > OS_CORE_SCALING_TICKS)
-        {
-            running[i]->state = READY;
-            running[i]->current_state_execution_time = 0;
-        }
-    }
+    bp->state = RUNNING;
 
     free(&running);
-    free(&ready);
 }
 
 void OsCore::run()
@@ -82,7 +65,7 @@ void OsCore::run()
 
             case RUNNING:
                 processes[i].current_total_execution_time++;
-                processes[i].Run();
+                processes[i].run();
                 break;
 
             case BLOCKED:

@@ -1,7 +1,12 @@
 #include "process.h"
 #include "os_core.h"
 
-void Process::Run()
+float Process::getFinalPriority()
+{
+    return ((float)priority)*PRIORITY_WEIGHT + ((float)aging)*AGING_WEIGHT;
+}
+
+void Process::run()
 {
     int rd_sum = 0;
     vector<int> aux_mem;

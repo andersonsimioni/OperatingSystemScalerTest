@@ -8,6 +8,9 @@ using namespace std;
 #include "process_type_enum.h"
 #include "process_state_enum.h"
 
+#define PRIORITY_WEIGHT 1.0f
+#define AGING_WEIGHT 1.0f
+
 class Process
 {
 private:
@@ -23,10 +26,10 @@ public:
     PROCESS_STATE_ENUM state; //Current state of process, all starts on starting
 
     int* states_total_executed_time; //Total executed time by state
-
     int requested_resource; //Simulate a resource request
 
-    void Run();
+    void run();
+    float getFinalPriority(); //Calculate the priority total of process: priority*priority_weight + aging*aging_weight
 
     Process(ifstream* processListFileStream);
 };
