@@ -29,15 +29,24 @@ vector<Process*> OsCore::getProcessesByState(PROCESS_STATE_ENUM state)
 
 void OsCore::scaleProcess()
 {
-    Process* bp = &processes[0]; //best process to scale in
-    for (int i = 1; i < processes.size(); i++) if(processes[i].getFinalPriority() > bp->getFinalPriority()) bp = &processes[i];
+    Process* bp = nullptr; //best process to scale in
+    vector<Process*> ready = getProcessesByState(READY);
+    if(ready.size() > 0)
+    {
+        bp = ready[0];
+        for (int i = 1; i < ready.size(); i++) if(ready[i]->getFinalPriority() > bp->getFinalPriority()) bp = ready[i];
+    }
 
     vector<Process*> running = getProcessesByState(RUNNING);
-    for (int i = 0; i < running.size(); i++) if(running[i]->PID!=bp->PID) running[i]->state = READY;
+    for (int i = 0; i < running.size(); i++) running[i]->state = READY;
 
-    bp->state = RUNNING;
-
-    free(&running);
+    if(bp != nullptr)
+    {
+        cout<<"Scaling "<<bp->name<<" process "<<bp->current_total_execution_time<<"/"<<bp->total_estimated_execution_time<<endl;
+        bp->state = RUNNING;
+    }
+    
+    //free(&running);
 }
 
 void OsCore::endTick()

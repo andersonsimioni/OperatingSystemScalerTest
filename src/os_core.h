@@ -10,7 +10,7 @@ using namespace std;
 
 #define OS_CORE_TICK_MS 1 //Looping clock ms
 #define OS_CORE_SCALING_TICKS 5 //Ticks to scale processes
-#define OS_CORE_TIME_SCALE 1000 //Scale to visualize better on run simulation, set 1 to real time
+#define OS_CORE_TIME_SCALE 1 //Scale to visualize better on run simulation, set 1 to real time
 #define BLOCK_UNBLOCK_PROBABILITY 5 //0-100% chance to request or receive a IO resource
 #define MAX_RUNNING_PROCESSES 1 //Max processes on running state simultaneous
 
